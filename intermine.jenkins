@@ -1,0 +1,57 @@
+#!groovy
+// Run intermine build
+properties([disableConcurrentBuilds()])
+
+pipeline {
+    agent { 
+        label 'slave'
+
+        }
+    environment { 
+        MAVEN_OPT      = '-Dmaven.test.skip=true'
+        BUILD_NO       = 'v1.0'
+        HOST           = http://localhost:8080
+        TEST1          = 'intermine'         
+        
+    }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '2'))
+        timestamps()
+    }
+  
+    stages {
+        stage("build intermine app") {
+            steps {
+                echo "===============build maven app======================="
+                dir ("intermine/testmine") {
+                sh '''
+                  ./setup.sh
+                  '''
+                }
+            }
+        }   
+        stage("check runing  ") {
+            steps {
+                echo "===============check runining intermine======================="
+                dir ("intermine/testmine") {
+                sh 'sleep 60'
+                sh 'sudo systemctl -ltpn'
+                sh '''
+                    #!/bin/bash
+                    curl  $HOST:$PORT_EXT$TEST_URL/ping | grep -o $TEST1
+                   '''
+                   echo "===============check runining passed=======================" 
+                }                 
+            }    
+        }
+        
+    }    
+    post { 
+        failure { 
+            echo "==============some gone wrong !!!==============="
+            
+        }
+    }
+    
+}    
+
