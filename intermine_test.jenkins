@@ -57,7 +57,7 @@ pipeline {
 
         stage("deploy to Dev_db") {
             steps {
-                build job: 'deploy_dev', propogate: true, wait: true
+                build job: 'deploy_dev', propagate: true, wait: true
             }
         }
            
