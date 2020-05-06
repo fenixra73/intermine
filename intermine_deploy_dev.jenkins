@@ -34,7 +34,7 @@ pipeline {
             steps {
                 echo "===============check runining intermine======================="
                 dir ("intermine/testmine") {
-                sh 'sudo systemctl -ltpn'
+                
                 sh '''
                    curl -I $HOST | grep -o $TEST1
                    '''
