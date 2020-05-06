@@ -4,14 +4,14 @@ properties([disableConcurrentBuilds()])
 
 pipeline {
     agent { 
-        label 'second'
+        label 'test'
 
         }
     environment { 
         MAVEN_OPT      = '-Dmaven.test.skip=true'
         BUILD_NO       = 'v1.0'
-        HOST           = http://localhost:8080
-        TEST1          = 'intermine'         
+        HOST           = 'http://18.195.228.44:8080/intermine-demo/'
+        TEST1          = '/intermine-demo/begin.do'         
         
     }
     options {
@@ -22,10 +22,11 @@ pipeline {
     stages {
         stage("build intermine app") {
             steps {
-                echo "===============build maven app======================="
-                dir ("intermine/testmine") {
+                echo "===============build intermine app======================="
+                dir ("testmine") {
                 sh '''
-                  ./setup.sh
+                  ./setup.sh > ~/log_setup  2>&1 < /dev/null &
+                  sleep 600
                   '''
                 }
             }
@@ -34,18 +35,35 @@ pipeline {
             steps {
                 echo "===============check runining intermine======================="
                 dir ("intermine/testmine") {
-                sh 'sleep 60'
                 sh 'sudo systemctl -ltpn'
                 sh '''
-                    #!/bin/bash
-                    curl  $HOST:$PORT_EXT$TEST_URL/ping | grep -o $TEST1
+                   curl -I $HOST | grep -o $TEST1
                    '''
                    echo "===============check runining passed=======================" 
                 }                 
             }    
         }
+
+        stage("terminate process java) {
+            steps{
+                echo "==================killall java======================="
+                sh '''
+                killall java
+                '''
+                
+
+            }
+        }
+
+        stage("deploy to Dev_db) {
+            steps {
+                build job: 'deploy_dev', propogate: true, wait: true
+            }
+        }
+           
         
-    }    
+    }
+       
     post { 
         failure { 
             echo "==============some gone wrong !!!==============="
