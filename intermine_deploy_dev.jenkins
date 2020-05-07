@@ -42,7 +42,7 @@ pipeline {
                 }                 
             }    
         }
-        stage("approve") {
+        stage("manual approve deploy to Prod") {
             steps {
                 echo "===============wait approve======================="
                   mail (to: 'fenixra73@gmail.com',
