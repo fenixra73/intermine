@@ -42,11 +42,11 @@ pipeline {
                 }                 
             }    
         }
-        stage("Approve to prod") {
+        stage("approve") {
             steps {
-                input 'Ready to go?';
-            }  
-
+                echo "===============wait approve======================="
+                  input 'Ready to go?'; 
+            }
         }
         stage("deploy to Prod_db") {
             steps {
@@ -57,7 +57,7 @@ pipeline {
         
     }    
              
-    }
+    
        
     post { 
         failure { 
@@ -66,5 +66,6 @@ pipeline {
         }
     }
     
-}    
+  
+}
 
