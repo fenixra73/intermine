@@ -42,8 +42,23 @@ pipeline {
                 }                 
             }    
         }
+        stage("Approve to prod") {
+            steps {
+                mail (to: 'fenixra73@gmail.com',
+                      subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) is waiting for input",
+                      body: "Please go to ${env.BUILD_URL}.");
+                input 'Ready to go?';
+            }  
 
+        }
+        stage("deploy to Prod_db") {
+            steps {
+                build job: 'deploy_prod', propagate: true, wait: true
+            }
+        }
+           
         
+    }    
              
     }
        
