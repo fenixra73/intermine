@@ -9,7 +9,7 @@ pipeline {
         }
     environment { 
         BUILD_NO       = 'v1.0'
-        HOST           = 'http://54.93.53.7:8080/intermine-demo/'
+        HOST           = 'http://54.93.241.221:8080/intermine-demo/'
         TEST1          = '/intermine-demo/begin.do'         
         
     }
@@ -45,9 +45,6 @@ pipeline {
         stage("manual approve deploy to Prod") {
             steps {
                 echo "===============wait approve======================="
-                  mail (to: 'fenixra73@gmail.com',
-                        subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) is waiting for input",
-                        body: "Please go to ${env.BUILD_URL}.");
                   input 'Ready to go?'; 
             }
         }
@@ -64,7 +61,7 @@ pipeline {
        
     post { 
         failure { 
-            echo "==============some gone wrong !!!==============="
+            echo "==============something gone wrong !!!==============="
             
         }
     }

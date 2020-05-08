@@ -10,7 +10,7 @@ pipeline {
     environment { 
         MAVEN_OPT      = '-Dmaven.test.skip=true'
         BUILD_NO       = 'v1.0'
-        HOST           = 'http://18.184.91.77:8080/intermine-demo/'
+        HOST           = 'http://18.184.73.146:8080/intermine-demo/'
         TEST1          = '/intermine-demo/begin.do'         
         
     }
@@ -43,16 +43,7 @@ pipeline {
             }    
         }
 
- //       stage("terminate process java") {
- //           steps{
- //               echo "==================killall java======================="
- //               sh '''
- //               killall java
- //               '''
-        
-
-//            }
-//        }
+         }
 
         stage("deploy to Dev_db") {
             steps {
@@ -65,7 +56,7 @@ pipeline {
        
     post { 
         failure { 
-            echo "==============some gone wrong !!!==============="
+            echo "==============something gone wrong !!!==============="
             
         }
     }

@@ -49,7 +49,7 @@ pipeline {
        
     post { 
         failure { 
-            echo "==============some gone wrong !!!==============="
+            echo "==============something gone wrong !!!==============="
             
         }
     }
