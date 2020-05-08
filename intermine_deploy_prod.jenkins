@@ -9,7 +9,7 @@ pipeline {
         }
     environment { 
         BUILD_NO       = 'v1.0'
-        HOST           = 'http://18.197.45.18:8080/intermine-demo/'
+        HOST           = 'http://18.185.56.51:8080/intermine-demo/'
         TEST1          = '/intermine-demo/begin.do'         
         
     }
