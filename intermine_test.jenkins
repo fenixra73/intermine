@@ -10,7 +10,7 @@ pipeline {
     environment { 
         MAVEN_OPT      = '-Dmaven.test.skip=true'
         BUILD_NO       = 'v1.0'
-        HOST           = 'http://18.184.73.146:8080/intermine-demo/'
+        HOST           = 'http://52.59.237.249:8080/intermine-demo/'
         TEST1          = '/intermine-demo/begin.do'         
         
     }
