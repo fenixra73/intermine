@@ -33,7 +33,7 @@ pipeline {
         }   
         stage("check runing  ") {
             steps {
-                echo "===============check runining intermine======================="
+                echo "===============check runining intermine======================"
                 dir ("intermine/testmine") {
                    sh '''
                    curl -I $HOST | grep -o $TEST1
